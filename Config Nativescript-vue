@@ -1,0 +1,49 @@
+após entrar na pasta do projeto e executar npm install, se der erro execute
+
+npm install -g --unsafe-perm=true --allow-root
+
+npm cache clean --force
+
+rm -rf node_modules
+
+npm cache clean --force
+delete node_modules folder
+delete package-lock.json file
+npm install
+
+npm link webpack
+
+npm i -g webpack-cli
+
+
+##################################################################################################
+
+
+# toda pasta que for criada tanto do android sdk, android studio, java, inclusive a pasta do projeto quando iniciar deve dar o chmod -R 777 .
+
+$ANDROID_HOME/tools/bin/sdkmanager "build-tools;25.0.2"
+
+
+# após criar o projeto
+
+tns migrate
+tns update
+tns run android
+
+# adicione o comando abaixo no webpack.config.js do projeto
+
+HTMLElement: function() {
+ return false;
+},
+
+
+# ficando assim:
+
+new webpack.DefinePlugin({
+  'global.TNS_WEBPACK': 'true',
+  TNS_ENV: JSON.stringify(mode),
+  process: 'global.process',
+  HTMLElement: function() {
+    return false;
+  },
+}),
