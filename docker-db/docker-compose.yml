@@ -1,0 +1,44 @@
+version: "3.1" 
+services: 
+  db:
+    container_name: mysql_container
+    image: mysql:8.0
+    ports: 
+      - 3306:3306
+    environment: 
+      - MYSQL_ROOT_PASSWORD=master
+      - MYSQL_DATABASE=db_dev
+      - MYSQL_USER=dev
+      - MYSQL_PASSWORD=master
+    volumes: 
+      - ./mysql_data:/var/lib/mysql
+    networks:
+      - dev_network
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:5
+    container_name: phpmyadmin_container
+    environment:
+      - PMA_ARBITRARY=1
+    restart: always
+    ports:
+      - 8081:80
+    volumes:
+      - /sessions
+    links:
+      - db
+    networks:
+      - dev_network
+  jenkins:
+    image: jenkins/jenkins:lts
+    container_name: jenkins_container
+    #restart: always
+    ports:
+      - 8082:8080
+      - 50000:50000
+    volumes:
+      - ./jenkins_home:/var/jenkins_home
+    networks:
+      - dev_network
+networks:
+  dev_network:
+    driver: bridge
